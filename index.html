@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<head>
+	<title>Weather App</title>
+</head>
+<b><body onload="f1()" id=1 bgcolor="skyblue" align="center" style="font-size: 30px;font-family: Times New Roman ">
+
+</body></b>
+<script>
+	function f1()
+	{
+		navigator.geolocation.getCurrentPosition(position=>{
+			let long = position.coords.longitude;
+			let lat = position.coords.latitude;
+			fetch(`https://cors-anywhere.herokuapp.com/https://samples.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${long}&appid=b6907d289e10d714a6e88b30761fae22`)
+			.then(res=>res.json())
+			.then(res=>{	
+				var body  =  document.getElementById('1');
+				var ul = document.createElement('ul');
+				ul.type="none"
+				var li = document.createElement('li');
+				li.innerHTML = 'City : '+res.city.name;
+				var li2 = document.createElement('li');
+				li2.innerHTML = 'Country : '+res.city.country;
+				var li3 = document.createElement('li');
+				li3.innerHTML = 'Weather : '+res.list[0].weather[0].main;
+				ul.appendChild(li)
+				ul.appendChild(li2)
+				ul.appendChild(li3)
+				body.appendChild(ul)
+			})
+		})
+	}
+</script>
